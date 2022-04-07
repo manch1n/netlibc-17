@@ -1,6 +1,6 @@
 #include "Timestamp.h"
 
-Timestamp::Timestamp() : _point(std::chrono::system_clock::now())
+Timestamp::Timestamp()
 {
 }
 
@@ -48,4 +48,29 @@ int Timestamp::HourMinSec(char *dst) const
     int n = sprintf(dst, FMT_DAY_TIME, hms.hours().count(), hms.minutes().count(), hms.seconds().count(), mill);
     dst[12] = save;
     return n;
+}
+
+Timestamp Timestamp::now()
+{
+    Timestamp stamp;
+    stamp._point = std::chrono::system_clock::now();
+    return stamp;
+}
+
+uint64_t Timestamp::getNanoseconds() const
+{
+    return _point.time_since_epoch().count();
+}
+
+bool Timestamp::operator<(const Timestamp &right) const
+{
+    return _point < right._point;
+}
+
+Timestamp Timestamp::operator+(double seconds)
+{
+    Timestamp stamp;
+    auto duration = std::chrono::milliseconds(static_cast<int64_t>(seconds * 1000));
+    stamp._point = this->_point + duration;
+    return stamp;
 }

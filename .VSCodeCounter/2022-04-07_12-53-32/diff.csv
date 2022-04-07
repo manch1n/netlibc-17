@@ -1,0 +1,5 @@
+"filename", "language", "C++", "comment", "blank", "total"
+"/home/manch1n/mylib/EventLoop.cc", "C++", 44, 0, 3, 47
+"/home/manch1n/mylib/EventLoop.h", "C++", 25, 0, 8, 33
+"/home/manch1n/mylib/test.cc", "C++", -49, 78, 0, 29
+"Total", "-", 20, 78, 11, 109

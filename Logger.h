@@ -66,7 +66,7 @@ namespace Logger
             int offset = 0;
             const char *lp = LOG_PREFIX[static_cast<unsigned>(level)];
             std::copy(lp, lp + LOG_PREFIX_LEN, buf.data());
-            Timestamp now;
+            Timestamp now = Timestamp::now();
             offset += LOG_PREFIX_LEN;
             now.HourMinSec(buf.data() + offset);
             offset += Timestamp::DAY_TIME_LEN;
