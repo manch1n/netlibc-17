@@ -9,6 +9,7 @@
 #include "IPv4Address.h"
 #include "SocketWrapper.h"
 #include "Acceptor.h"
+#include "TCPServer.h"
 #include <sys/timerfd.h>
 using namespace std;
 
@@ -279,10 +280,17 @@ int main(int argc, char **argv)
     //     cout << "write: " << nwrite << endl;
     //     ::close(fd);
     // }
+    // {
+    //     EventLoop loop;
+    //     IPv4Address addr(12345);
+    //     Acceptor acceptor(&loop, addr);
+    //     acceptor.startAccept();
+    //     loop.loop();
+    // }
     {
         EventLoop loop;
-        IPv4Address addr(12345);
-        Acceptor acceptor(&loop, addr);
+        IPv4Address addr(55555);
+        TCPServer server(&loop, addr);
         loop.loop();
     }
     return 0;

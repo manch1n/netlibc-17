@@ -7,4 +7,4 @@ int bindListenOrDie(const IPv4Address &addr);
 
 int acceptClient(int fd);
 
-IPv4Address getAddessByFd(int fd);
+IPv4Address getAddressByFd(int fd);

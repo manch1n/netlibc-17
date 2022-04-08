@@ -11,6 +11,7 @@ TimerQueue::TimerQueue(EventLoop *loop) : _tfd(::timerfd_create(CLOCK_MONOTONIC,
 {
     _chan.setReadCB(std::bind(&TimerQueue::timerReadHandler, this));
     _loop->addChannel(&_chan);
+    _chan.enableReading();
 }
 
 void TimerQueue::addTimer(const Timer::TimerCB &tcb, double when, double interval)

@@ -16,6 +16,8 @@ public:
 
     void handleEvent();
 
+    void enableReading();
+    void enableWriting();
     void disableWriting();
     void setrevent(int32_t re)
     {

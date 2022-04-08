@@ -13,7 +13,7 @@ public:
     IPv4Address(uint64_t port);
     IPv4Address(const struct sockaddr_in &addr);
     std::string IPPortstr() const;
-    const struct sockaddr *getUndelyAddr() const;
+    const struct sockaddr *getUnderlyAddr() const;
 
 private:
     struct sockaddr_in _addr;

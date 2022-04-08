@@ -8,6 +8,7 @@ EventLoop::EventLoop()
     assert(_inLoopEfd != -1);
     _runInLoopChan.setReadCB(std::bind(&EventLoop::runInLoopHandler, this));
     addChannel(&_runInLoopChan);
+    _runInLoopChan.enableReading();
 }
 
 void EventLoop::loop()
@@ -26,12 +27,16 @@ void EventLoop::loop()
 
 void EventLoop::runOnce(double init, const Timer::TimerCB &tcb)
 {
-    _timerQueue->addTimer(tcb, init, 0);
+    runInLoop([&]()
+              { _timerQueue->addTimer(tcb, init, 0); });
+    //_timerQueue->addTimer(tcb, init, 0);
 }
 
 void EventLoop::runEvery(double init, double interval, const Timer::TimerCB &tcb)
 {
-    _timerQueue->addTimer(tcb, init, interval);
+    runInLoop([&]()
+              { _timerQueue->addTimer(tcb, init, interval); });
+    //_timerQueue->addTimer(tcb, init, interval);
 }
 
 void EventLoop::runInLoop(const RunInLoopCB &cb)

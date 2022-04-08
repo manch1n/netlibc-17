@@ -35,7 +35,7 @@ std::string IPv4Address::IPPortstr() const
     return buf;
 }
 
-const struct sockaddr *IPv4Address::getUndelyAddr() const
+const struct sockaddr *IPv4Address::getUnderlyAddr() const
 {
     return reinterpret_cast<const struct sockaddr *>(&_addr);
 }

@@ -16,9 +16,11 @@ public:
     void loop();
     void stop() { _running = false; }
 
+    // threadsafe
     void runOnce(double init, const Timer::TimerCB &tcb);
+    // threadsafe
     void runEvery(double init, double interval, const Timer::TimerCB &tcb);
-
+    // threadsafe
     void runInLoop(const RunInLoopCB &cb);
 
     void assertRunInLoopThread()
@@ -26,16 +28,17 @@ public:
         assert(runInLoopThread());
     }
 
+    //  threadsafe
     void addChannel(Channel *chan)
     {
         _poller->addIntrest(chan);
     }
-
+    // threadsafe
     void delChannel(Channel *chan)
     {
         _poller->delIntrest(chan);
     }
-
+    // threadsafe
     void updateChannel(Channel *chan)
     {
         _poller->updateIntrest(chan);
