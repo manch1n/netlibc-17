@@ -19,6 +19,7 @@ public:
     void enableReading();
     void enableWriting();
     void disableWriting();
+    void disableReading();
     void setrevent(int32_t re)
     {
         _revent = re;

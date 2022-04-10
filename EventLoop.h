@@ -25,7 +25,7 @@ public:
 
     void assertRunInLoopThread()
     {
-        assert(runInLoopThread());
+        assert(ifRunInLoopThread());
     }
 
     //  threadsafe
@@ -52,12 +52,12 @@ public:
         ::close(_inLoopEfd);
     }
 
-private:
-    bool runInLoopThread()
+    bool ifRunInLoopThread()
     {
         return _belongTo == ::gettid();
     }
 
+private:
     void runInLoopHandler();
 
     void wakeUp();

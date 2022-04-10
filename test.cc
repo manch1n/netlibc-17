@@ -11,6 +11,7 @@
 #include "Acceptor.h"
 #include "TCPServer.h"
 #include "Message.h"
+#include <utility>
 #include <sys/timerfd.h>
 using namespace std;
 
@@ -294,21 +295,21 @@ int main(int argc, char **argv)
     //     TCPServer server(&loop, addr);
     //     loop.loop();
     // }
-    {
-        auto judge = [](const char *buf, int32_t len)
+    { // echo server
+        auto judge = [](const char *buf, int32_t len) -> std::pair<int32_t, int32_t>
         {
-            if (len >= 10)
+            return {0, len};
+        };
+        auto msgCB = [](const TCPConnectionPtr &conn, std::vector<char> &&message)
+        {
+            cout << "messagesize: " << message.size() << endl;
+            conn->send(std::move(message));
+            if (conn->readEOF())
             {
-                return std::make_pair<int32_t, int32_t>(10, 1);
+                conn->shutDown();
             }
-            else
-                return std::make_pair<int32_t, int32_t>(-1, -1);
         };
-        auto msgCB = [](const TCPConnectionPtr &conn, std::vector<char> &&header, std::vector<char> &&content)
-        {
-            std::cout << "header: " << header[0] << " content: " << content[0] << endl;
-        };
-        TCPConnConf conf(10, judge);
+        TCPConnConf conf(judge);
         conf.msgCB = msgCB;
         EventLoop loop;
         IPv4Address addr(55555);

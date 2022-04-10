@@ -19,10 +19,12 @@ public:
 
     uint64_t getIndentifier() const;
 
-    void setConnectedCB(const TCPConnectedCB &cb);
-    void setMessageCB(const TCPMessageCB &cb);
-    void setClosingCB(const TCPClosingCB &cb);
-    void setErrorCB(const TCPErrorCB &cb);
+    // threadsafe data then would unvailable
+    void send(std::vector<char> &&data);
+    void shutDown();
+    void setNoDelay();
+    void keepAlive(int idle, int interval, int tryCount);
+    bool readEOF() const;
 
     ~TCPConnection() // no reference to this ptr
     {
@@ -32,10 +34,19 @@ public:
 
 private:
     void handleRead();
+    void handleWrite();
+    void sendInLoop(std::vector<char> &data);
+    void shutDownInLoop();
+    bool writeCompleted() const;
+    bool readCompleted() const;
     EventLoop *_loop;
     int _connfd;
     const uint64_t _identifier;
     Channel _chan;
     const TCPConnConf &_conf;
     RecvHander _recvHandler;
+    std::deque<std::vector<char>> _outputBuffers;
+    bool _errFlag;
+    bool _writeEofFlag;
+    bool _readEofFlag;
 };

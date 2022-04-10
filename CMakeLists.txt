@@ -8,7 +8,7 @@ include_directories(./)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_compile_options(-g -Wall -Werror)
+add_compile_options(-g -Wall -Werror -Wno-error=sign-compare)
 
 add_executable(${PROJECT_NAME} ${SRCS})
 

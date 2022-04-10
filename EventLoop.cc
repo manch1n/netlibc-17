@@ -41,7 +41,7 @@ void EventLoop::runEvery(double init, double interval, const Timer::TimerCB &tcb
 
 void EventLoop::runInLoop(const RunInLoopCB &cb)
 {
-    if (runInLoopThread())
+    if (ifRunInLoopThread())
     {
         cb();
     }

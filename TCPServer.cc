@@ -13,6 +13,12 @@ TCPServer::TCPServer(EventLoop *loop, const IPv4Address &addr, const TCPConnConf
         userCloCB(ptr);
         this->closeConn(ptr);
     };
+    auto userErrCB = _conf.errCB;
+    _conf.errCB = [this, userErrCB](const TCPConnectionPtr &ptr)
+    {
+        userErrCB(ptr);
+        this->closeConn(ptr);
+    };
     _acceptor->setAcceptCB(std::bind(&TCPServer::newConn, this, std::placeholders::_1));
     _acceptor->startAccept();
 }

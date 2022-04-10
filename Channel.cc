@@ -52,6 +52,12 @@ void Channel::disableWriting()
   _owner->updateChannel(this);
 }
 
+void Channel::disableReading()
+{
+  _event = _event & (~EPOLLIN);
+  _owner->updateChannel(this);
+}
+
 Channel::~Channel()
 {
   //_owner->delChannel(this);
